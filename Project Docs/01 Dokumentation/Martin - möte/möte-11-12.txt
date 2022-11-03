@@ -1,0 +1,44 @@
+Martins önskemål:
+
+
+
+=======================================================================
+
+DONE!!
+ 1: Concat - FirstName , LastName
+ 2: "Select2" is a tool for using in dropdowns (makes them searchable)
+ 3: 2 ggr halvdagar borde vara 2*1000kr (Martin ångrar sig... han är nöjd med vår lösning!).
+ 4: Bokningslista (och faktiskt överallt) Ersätt email med first/lastname (Richard) 
+ 5: Lägg till kolumnen Company! (Heimir) 
+ 6: Datatables på historik (och faktiskt ALLA tabeller)
+ 7: Hover på alla datatables verkar ha försvunnit
+ 8: Replace Room icon (square)... not a good icon!!!!
+ 9: Allow normal users to change their COMING bookings! (mobbprog)
+10: Home Index - Starttid, Sluttid move it to the left.
+11: Remove seconds from all booking times. (Richard)
+12: Remove profile page for normal users!!
+13: Rabbatt (Ghane)
+14: Våningsnamn (bottenvåning o plan3)
+15: Style dropdowns select2 på edit company (Ghane)
+16: Company in Admin Bokninglista (Heimir)
+
+18: Responsivitet
+19(a): Som admin ska man kunna ändra pris manuellt på en bokning
+19(b): Select2 on användare dropdown admin edit bookings
+20: Lägg till statiska priser  på edit booking sidan,
+21: Remove rabatt från Company!
+22: Ta bort radera knappen (överallt)
+23: Lägg till Activ i Company tabeller (listan, details, edit)
+24: Icke aktiva bolag ska inte kunna väljas när man skapa användare (dropdown)
+
+25: Icke aktiva rum ska inte vara bokbara
+
+
+31: Som Admin kan vi inte skapa en NY bokning med det rummet. BRA!
+32: Som Admin kan vi gå till listan av alla bokningar och EDITERA en bokning på det avaktiverade rummet. BRA!
+33: Som vanlig användare syns det avaktiverade rummet på Home/Index och är bokbar! DÅLIG! - Done
+34: Som vanlig användare kan man gå till MINA BOKNINGAR och där kan man editera en bokning med det avaktiverade rummet! DÅLIG! - Done
+35: Flex room har nu enbart dagspris
+36. Justera "Hantera" fältets storlek på index listorna
+
+

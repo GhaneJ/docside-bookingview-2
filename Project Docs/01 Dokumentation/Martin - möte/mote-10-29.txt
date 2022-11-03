@@ -1,0 +1,28 @@
+Ändra bolag till FÖRETAG
+
+Fixa nummer (ändra till int och fixa med convertering för rabatter).
+
+Done 2021-11-02: Bolagshistorik. Visa alla bokningar för företaget.
+Kanske relevant att fixa för användare också.
+
+Done 2021-11-02: Bokning. Se till att inaktiva rum inte visas som bokningsbara objekt
+
+Done 2021-11-02: Firstday fullcalendar start with 1.
+Done 2021-11-02: Ta bort utgråning av söndag och lördag.
+
+Done 2021-11-02: Date clicking 
+Done 2021-11-02: Resource calendar
+Done 2021-11-02: selectable
+
+Fixa prisalgoritm
+
+
+// För nästa vecka.
+Ha ett fungerande system.
+Ta en modell sittstund innan vi lägger in data.
+Done 2021-11-02: Histtorielista - historik över bokningar länkade till objektet.
+Vettigt gränssnitt på introduktionen. Både startida och admin.
+Fullcalendar på admin för alla rum. 
+Colour coded för alla rum.
+Bra alternativ till listan med fullcalendar. 
+Veckovy med colour coded rooms. 

@@ -1,0 +1,45 @@
+
+
+
+1: DONE RICH 2021-10-26 - Mark compulsory fields with * in all creation forms (write text "Obligitorisk")
+   (jag löste det med placeholder texts... ok?)
+
+2: DONE RICH 2021-10-25 - Change index to Create (Rooms)!!!!
+
+3: DONE RICH 2021-10-26 - Flytta "Logga ut" knappen så att den är längst på sidebar admin
+
+4: Fixa Aktiv/Non Aktiv till samtliga Show sidor!!
+
+5: Ta bort RADERA från alla Show sidor
+
+6: När man uppdaterar orgnumret så MÅSTE man skriva nnnnnn-nnnn (inkl '-'')
+   (Det borde även gå att skriva nnnnnnnnnn [exkl '-']) 
+
+7: Löser problemet med decimalerna (Globalisation?) 
+
+8: DONE RICH 2021-10-25 - Visa bock eller kryss för tillgänglighet (istället för Ja eller Nej)
+
+9: Move styling from _layout.csmtml to custom_styling.css
+
+10: DONE RICH 2021-10-30 - Remove "Register as a new user" from login page
+
+11: Add companies to edit User page
+
+12: Show 'company name' instead of 'company id' on list users page
+
+13: "Forgot your password" functionality does not work. Remove or fix?
+
+14: "Resend email confirmation" functionality does not work. Remove or fix?
+
+15: DONE RICH 2021-10-30 - Change Bolg till Företag
+
+
+17. När man blåmarkerar en bokning, blir den finnare att ha nån möjlighet att se  vem som har bokat den, nånstans på kalendern, t.ex. 08:30-13:00 Bokat av @företag!
+
+18. Det blir bra att skapa klasser med metoder för att minska repeterande kod i vår backend för en renare och tydligare kodbas.
+
+19. stängningstiden i bokningkalender överskrider 19:00.
+
+20. När man navigerar till inloggningssidan, förväntas att Användar-Email rutan ska vara i fokus, då användaren behöver inte klicka på den med mus.
+
+

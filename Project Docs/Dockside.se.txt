@@ -1,0 +1,8 @@
+Username: admin@dockside.se
+Password: Admin123#
+
+or
+
+Username: admin@bigcompany.com
+Password: Admin123#
+No company

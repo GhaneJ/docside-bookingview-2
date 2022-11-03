@@ -1,0 +1,89 @@
+
+När bokningen sker, jämnföra priser.
+
+bokbart mellan 0700 - 1900
+Halvdag 07-13 || 13-19
+
+exempel : 07-14 - Vad blir priset?
+Jämföra med en loop.
+
+"Lägg till" i admin hamnar längst ner.
+Ovanför => Listor.
+Listor med knappar. Kunna editera.
+
+
+Borttagning ska vi INTE GÖRA
+Ger en negativ effekt på bokningar.
+
+
+Alternativt ha datatabells (AdminLTE grej) för att visa det här och kunna göra användare inaktiva/aktiva on the fly.
+
+
+En till sak att lägga till hos användare:
+
+
+Sumpa Bilden (YES!)
+
+Icke inloggade användare får en knapp för att begära en inlogningskonto. (??)
+
+Blobb - undvika som pesten.
+db växer enormt.
+bilder läggs upp som en länk.
+trippel 7 - 777 maximal rättigheter för map för bilder
+
+Använda BRA klassnamn och ID, även om design inte är prio just nu. Hjälper till i längden.
+
+Vårt fokus nu, lägg till visa knappen, samma struktur som som lägg till.
+Lista med objekten, och knappar för att editera, och aktivera/deaktivera
+GLÖM INTE BOKNINGAR
+
+På startsidan, det som händer idag!
+Dagen bokningar och morgondagen bokningar
+
+Outlook kalender? Tror syftet här är att följa samma struktor. Kunna visa EXAKTA tider för bokningarna i kalendern
+och inte bara ta upp hela heldagar.
+
+
+Nästa vecka -
+
+Vara klar med alla listfunktionerna.
+Vara klar med bokningen. vara klar med länken bokningar.
+Då har vi gjort hushållsarbete. Dags att putsa silver - frontend.
+Då behöver vi dela upp arbetet bättre.
+Okej att köra på med mobprogrammering. 
+
+Bottom line - Det här går bra, vi kan sitta lugna i båten
+
+
+
+
+==========================================================================
+== DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+==========================================================================
+1:
+Rollerna för användare är:
+Intern kund
+Extern kund kopplad till företag
+Dockside anställd (admin)
+
+2:
+// Bolag
+Bolagsnamn,
+orgnummer
+fakturerings email adress
+
+3:
+Lägg till en bool på användare för aktiv eller inaktiv.
+
+4:
+Frivilligt fält för telefonnummer
+
+5:
+Rum
+Internal rabatt > svenska
+kostnad > Hyra per timme
+Kvadratmeter !
+
+6: 
+Flytta logout knapopen till längst ner (class danger)
+
