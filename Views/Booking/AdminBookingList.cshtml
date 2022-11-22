@@ -28,18 +28,21 @@
                                 <td width="5%">@item.Id</td>
                                 <td width="15%">@item.datStartBooking.ToShortDateString() kl: @item.datStartBooking.ToShortTimeString()</td>
                                 <td width="15%">@item.datEndBooking.ToShortDateString() kl: @item.datEndBooking.ToShortTimeString()</td>
+                                @if (item.User.Company != null)
+                               {
+                                    <td width="20%">@item.User.FirstName @item.User.LastName</td>
+                                    <td width="15%">@item.User.Company.strCompanyName</td>
+                                    <td width="12%">@item.Room.strRoomName</td>
+                                    <td width="10%">@item.dblBookingPrice kr</td>
+                                    <td width="8%">
+                                        @*<a asp-action="Create" asp-route-id="@item.Id"><i class="fas fa-2x fa-calendar-plus mr-2"></i></a>*@
+                                        <a asp-action="AdminBookingEdit" asp-route-id="@item.Id"><i class="fas fa-2x fa-pen-square mr-2"></i></a>
+                                        <a asp-action="UpdateBookingPrice" asp-route-id="@item.Id"><i class="fas fa-2x fa-yen-sign mr-2"></i></a>
+                                        <a asp-action="AdminBookingDelete" asp-route-id="@item.Id"><i class="fas fa-2x fa-trash-alt mr-2 delete"></i></a>
 
-                                <td width="20%">@item.User.FirstName @item.User.LastName</td>
-                                <td width="15%">@item.User.Company.strCompanyName</td>
-                                <td width="12%">@item.Room.strRoomName</td>
-                                <td width="10%">@item.dblBookingPrice kr</td>
-                                <td width="8%">
-                                    @*<a asp-action="Create" asp-route-id="@item.Id"><i class="fas fa-2x fa-calendar-plus mr-2"></i></a>*@
-                                    <a asp-action="AdminBookingEdit" asp-route-id="@item.Id"><i class="fas fa-2x fa-pen-square mr-2"></i></a>
-                                    <a asp-action="UpdateBookingPrice" asp-route-id="@item.Id"><i class="fas fa-2x fa-yen-sign mr-2"></i></a>
-                                    <a asp-action="AdminBookingDelete" asp-route-id="@item.Id"><i class="fas fa-2x fa-trash-alt mr-2 delete"></i></a>
-
-                                </td>
+                                    </td>
+                               }
+                                
                             </tr>
                         }
                     </tbody>

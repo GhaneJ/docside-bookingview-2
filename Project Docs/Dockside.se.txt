@@ -3,6 +3,6 @@ Password: Admin123#
 
 or
 
-Username: admin@bigcompany.com
+Username: admin@bluepeak.se
 Password: Admin123#
-No company
+Big Company

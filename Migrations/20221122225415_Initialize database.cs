@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using MySql.EntityFrameworkCore.Metadata;
+
+#nullable disable
 
 namespace docside_bookingview_2.Migrations
 {
-    public partial class InitMigration : Migration
+    public partial class Initializedatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,10 +13,10 @@ namespace docside_bookingview_2.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
+                    Id = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,11 +28,12 @@ namespace docside_bookingview_2.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    strCompanyName = table.Column<string>(type: "text", nullable: false),
-                    dblDiscount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    OrganisationsNummer = table.Column<string>(type: "text", nullable: false),
-                    CompanyEmail = table.Column<string>(type: "text", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    strCompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dblDiscount = table.Column<int>(type: "int", nullable: false),
+                    OrganisationsNummer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,16 +45,18 @@ namespace docside_bookingview_2.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    strRoomName = table.Column<string>(type: "text", nullable: false),
-                    dcmWholeDay = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    dcmHalfDay = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    dcmHour = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    dcmInternalDiscount = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    SquareMetres = table.Column<string>(type: "text", nullable: false),
-                    Available = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    strRoomName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dcmWholeDay = table.Column<int>(type: "int", nullable: false),
+                    dcmHalfDay = table.Column<int>(type: "int", nullable: false),
+                    dcmHour = table.Column<int>(type: "int", nullable: false),
+                    dcmInternalDiscount = table.Column<int>(type: "int", nullable: false),
+                    SquareMetres = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Available = table.Column<bool>(type: "bit", nullable: false),
                     ImageTitle = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    ImageName = table.Column<string>(type: "nvarchar(100)", nullable: true)
+                    ImageName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    Floor = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    MaxPeople = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,10 +68,10 @@ namespace docside_bookingview_2.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    ClaimType = table.Column<string>(type: "text", nullable: true),
-                    ClaimValue = table.Column<string>(type: "text", nullable: true)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -84,24 +88,25 @@ namespace docside_bookingview_2.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    ActiveUser = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
-                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ActiveUser = table.Column<bool>(type: "bit", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
                     AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -111,8 +116,7 @@ namespace docside_bookingview_2.Migrations
                         name: "FK_AspNetUsers_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -120,10 +124,10 @@ namespace docside_bookingview_2.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    ClaimType = table.Column<string>(type: "text", nullable: true),
-                    ClaimValue = table.Column<string>(type: "text", nullable: true)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -140,10 +144,10 @@ namespace docside_bookingview_2.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    ProviderKey = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                    LoginProvider = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,8 +164,8 @@ namespace docside_bookingview_2.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    RoleId = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -184,10 +188,10 @@ namespace docside_bookingview_2.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    Name = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    Value = table.Column<string>(type: "text", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -205,12 +209,12 @@ namespace docside_bookingview_2.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    datStartBooking = table.Column<DateTime>(type: "datetime", nullable: false),
-                    datEndBooking = table.Column<DateTime>(type: "datetime", nullable: false),
-                    datTimeOfBooking = table.Column<DateTime>(type: "datetime", nullable: false),
-                    dblBookingPrice = table.Column<double>(type: "double", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(200)", nullable: true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    datStartBooking = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    datEndBooking = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    datTimeOfBooking = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    dblBookingPrice = table.Column<double>(type: "float", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(200)", nullable: true),
                     RoomId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -220,14 +224,12 @@ namespace docside_bookingview_2.Migrations
                         name: "FK_Bookings_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Bookings_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -239,7 +241,8 @@ namespace docside_bookingview_2.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -270,7 +273,8 @@ namespace docside_bookingview_2.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_RoomId",
