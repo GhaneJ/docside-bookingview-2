@@ -1,11 +1,10 @@
-﻿using docside_bookingview_2.Areas.Identity.Data;
+﻿namespace docside_bookingview_2.Controllers;
+
 using docside_bookingview_2.Data;
 using docside_bookingview_2.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,222 +12,209 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace docside_bookingview_2.Controllers
+public class RoomsController : Controller
 {
-    public class RoomsController : Controller
+    private readonly ApplicationDbContext _db;
+    private readonly IWebHostEnvironment hostEnvironment;
+
+    public RoomsController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment)
     {
-        private readonly ApplicationDbContext _db;
-        private readonly IWebHostEnvironment hostEnvironment;
+        _db = db;
+        this.hostEnvironment = hostEnvironment;
+    }
 
-        public RoomsController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment)
+    [Authorize(Roles = "admin")]
+    public IActionResult Index()
+    {
+        IEnumerable<Room> roomList = _db.Rooms;
+
+        return View(roomList);
+    }
+
+    //EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT -
+    //EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT -
+    //EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT -
+    //EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT -
+
+    // GET: Rum/Edit/id
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> EditRooms(int? id)
+    {
+        if (id == null)
         {
-            _db = db;
-            this.hostEnvironment = hostEnvironment;
+            return NotFound();
         }
 
-        [Authorize(Roles = "admin")]
-        public IActionResult Index()
+        var room = await _db.Rooms.FindAsync(id);
+        if (room == null)
         {
-            IEnumerable<Room> roomList = _db.Rooms;
+            return NotFound();
+        }
+        return View(room);
+    }
 
-            return View(roomList);
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> EditRooms(int id, Room room)
+    {
+        if (id != room.Id)
+        {
+            return NotFound();
         }
 
-        //EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT 
-        //EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT 
-        //EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT 
-        //EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT - EDIT 
-
-        // GET: Rum/Edit/id
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> EditRooms(int? id)
+        if (ModelState.IsValid)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
-
-            var room = await _db.Rooms.FindAsync(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-            return View(room);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
-        //public async Task<IActionResult> EditRooms(int id, [Bind("Id,strRoomName,dcmWholeDay,dcmHalfDay,dcmHour,dcmInternalDiscount, SquareMetres, Available, Bookings,ImageTitle,ImageName,ImageFile,Floor,MaxPeople")] Room room)
-        public async Task<IActionResult> EditRooms(int id, Room room)
-        {
-            if (id != room.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (room.ImageFile != null)
                 {
-
-                    if (room.ImageFile != null)
+                    string wwwRootPath = hostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(room.ImageFile.FileName);
+                    string extension = Path.GetExtension(room.ImageFile.FileName);
+                    room.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssffff") + extension;
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
                     {
-                        string wwwRootPath = hostEnvironment.WebRootPath;
-                        string fileName = Path.GetFileNameWithoutExtension(room.ImageFile.FileName);
-                        string extension = Path.GetExtension(room.ImageFile.FileName);
-                        room.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssffff") + extension;
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-                        using (var fileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await room.ImageFile.CopyToAsync(fileStream);
-                        }
-                    }
-                    _db.Update(room);
-                    await _db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RoomExists(room.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        await room.ImageFile.CopyToAsync(fileStream);
                     }
                 }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(room);
-        }
-
-        //CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE 
-        //CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE 
-        //CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE 
-        //CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE 
-        [Authorize(Roles = "admin")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        //GET-Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public IActionResult Create(Room obj)
-        public async Task<IActionResult> Create([Bind("strRoomName,dcmWholeDay,dcmHalfDay,dcmHour,dcmInternalDiscount,SquareMetres,Available,ImageTitle,ImageName,ImageFile,Floor,MaxPeople")] Room room)
-        {
-            if (ModelState.IsValid)
-            {
-                string wwwRootPath = hostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(room.ImageFile.FileName);
-                string extension = Path.GetExtension(room.ImageFile.FileName);
-                room.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssffff") + extension;
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await room.ImageFile.CopyToAsync(fileStream);
-                }
-                //Inserts record
-                _db.Add(room);
+                _db.Update(room);
                 await _db.SaveChangesAsync();
-                return RedirectToAction("Index");
             }
-            return View(room);
-        }
-
-        //DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS
-        //DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS
-        //DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS
-        //DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS
-
-        // GET: Room/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+            catch (DbUpdateConcurrencyException)
             {
-                return NotFound();
+                if (!RoomExists(room.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
-
-            var room = await _db.Rooms
-                .FirstOrDefaultAsync(r => r.Id == id);
-
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
-        }
-
-        //DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN 
-        //DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN 
-        //DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN 
-        //DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN 
-
-
-        // GET: Room/Details/5
-        public async Task<IActionResult> DetailsAdmin(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _db.Rooms
-                .FirstOrDefaultAsync(r => r.Id == id);
-
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
-        }
-
-        //DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE
-        //DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE
-        //DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE
-        //DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE
-
-        // GET: Room/Delete/id
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _db.Rooms
-                .FirstOrDefaultAsync(r => r.Id == id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
-        }
-
-        // POST: Room/Delete/id
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var room = await _db.Rooms.FindAsync(id);
-            _db.Rooms.Remove(room);
-            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        return View(room);
+    }
 
-        //====================================================================================================
-        //====================================================================================================
-        //====================================================================================================
-        //====================================================================================================
+    //CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE -
+    //CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE -
+    //CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE -
+    //CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE - CREATE -
 
-        private bool RoomExists(int id)
+    [Authorize(Roles = "admin")]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    //GET-Create
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    //public IActionResult Create(Room obj)
+    public async Task<IActionResult> Create([Bind("strRoomName,dcmWholeDay,dcmHalfDay,dcmHour,dcmInternalDiscount,SquareMetres,Available,ImageTitle,ImageName,ImageFile,Floor,MaxPeople")] Room room)
+    {
+        if (ModelState.IsValid)
         {
-            return _db.Rooms.Any(e => e.Id == id);
+            string wwwRootPath = hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(room.ImageFile.FileName);
+            string extension = Path.GetExtension(room.ImageFile.FileName);
+            room.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssffff") + extension;
+            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await room.ImageFile.CopyToAsync(fileStream);
+            }
+            //Inserts record
+            _db.Add(room);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
+        return View(room);
+    }
+
+    //DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS -
+    //DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS -
+    //DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS -
+    //DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS - DETAILS -
+
+    // GET: Room/Details/5
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var room = await _db.Rooms
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (room == null)
+        {
+            return NotFound();
+        }
+
+        return View(room);
+    }
+
+    //DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN -
+    //DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN -
+    //DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN -
+    //DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN - DETAILSADMIN -
+
+    // GET: Room/Details/5
+    public async Task<IActionResult> DetailsAdmin(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var room = await _db.Rooms
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (room == null)
+        {
+            return NotFound();
+        }
+        return View(room);
+    }
+
+    //DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE -
+    //DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE -
+    //DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE -
+    //DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE - DELETE -
+
+    // GET: Room/Delete/id
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+        var room = await _db.Rooms
+            .FirstOrDefaultAsync(r => r.Id == id);
+        if (room == null)
+        {
+            return NotFound();
+        }
+        return View(room);
+    }
+
+    // POST: Room/Delete/id
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var room = await _db.Rooms.FindAsync(id);
+        _db.Rooms.Remove(room);
+        await _db.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    private bool RoomExists(int id)
+    {
+        return _db.Rooms.Any(e => e.Id == id);
     }
 }

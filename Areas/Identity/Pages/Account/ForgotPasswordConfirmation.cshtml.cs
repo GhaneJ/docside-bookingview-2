@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿namespace docside_bookingview_2.Areas.Identity.Pages.Account;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace docside_bookingview_2.Areas.Identity.Pages.Account
+[AllowAnonymous]
+public class ForgotPasswordConfirmation : PageModel
 {
-    [AllowAnonymous]
-    public class ForgotPasswordConfirmation : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }
